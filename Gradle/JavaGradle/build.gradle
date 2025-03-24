@@ -37,8 +37,12 @@ task runAppAgain(type: JavaExec) {
   if (project.hasProperty("num1") && project.hasProperty("num2")) {
     args(project.getProperty('num1'), project.getProperty('num2'));
   } else if (project.hasProperty("num1")){
-    args(project.getProperty('num1'), 1);
-  }
+    println("Only one argument provided. Default value used for empty argument...");
+    args(project.getProperty("num1"), 2);
+}   else {
+    args(1,2);
+}
+
 }
 
 // task that runs the Fraction Main which does not use arguments: gradle runFraction
@@ -51,6 +55,27 @@ task runFraction(type: JavaExec) {
   main = 'Fraction'
 }
 
+task runFrac(type: JavaExec) {
+  group 'Fraction Tasks'
+  description 'Tasks which runs Fraction with two arguments or default values'
+
+  classpath = sourceSets.main.runtimeClasspath
+
+  main = 'Fraction'
+
+  if (project.hasProperty("num") && project.hasProperty("denom")) {
+     args(project.getProperty('num'), project.getProperty('denom'));
+} else if (project.hasProperty("num")) {
+println("Only numerator provided. Applying default denominator (2)");
+args(project.getProperty('num'), 2);
+} else if (project.hasProperty("denom")) {
+println("Only denominator provided. Applying default numerator (1)");
+args(1,project.getProperty('denom'));
+} else {
+println("No arguments provided. Default values substituted.");
+args(1,2);
+}
+}
 // Try:
 // 1. Change Fraction.main so it accepts 2 arguments
 // 2. Create a new gradle tasks that accepts two arguments and 

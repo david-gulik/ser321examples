@@ -43,10 +43,18 @@ public class Fraction {
          // Fraction *frac = [[Fraction alloc] init];
          Fraction frac = new Fraction();
 
+	 // parse integer arguments, catch exception for non-integers
+	 int argNum = 0;
+	 int argDenom = 0;
+	 try {
+		 
          // set the values
-         frac.setNumerator(1);
-         frac.setDenominator(3);
-
+         frac.setNumerator(Integer.parseInt(args[0]));
+         frac.setDenominator(Integer.parseInt(args[1]));
+	 } catch (Exception e) {
+		 System.out.println("Arguments must be integers.");
+		 System.exit(1);
+	 }
          // print it
          System.out.print("The fraction is: ");
          frac.print();
